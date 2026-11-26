@@ -20,10 +20,15 @@ Precisa só de Python 3.8+, sem nada para instalar.
 ```bash
 git clone https://github.com/robertotxr/lfc-gerador-analisadores.git
 cd lfc-gerador-analisadores
-python3 main.py                         # menu interativo
+python3 main.py web                     # interface gráfica no navegador
+python3 main.py                         # menu no terminal
 python3 rodar_exemplos.py               # roda todos os exemplos (saídas em saida/exemplos/)
-python3 -m unittest discover testes     # 45 testes automáticos
+python3 -m unittest discover testes     # testes automáticos
 ```
+
+<p align="center"><img src="docs/img/interface.png" alt="Interface gráfica: tabela de análise léxica desenhada como autômato" width="100%"></p>
+
+A interface tem uma aba para cada parte: **Léxico** (definições regulares, os autômatos de cada etapa desenhados e em tabela, e o texto fonte com cada token destacado), **Sintático** (First/Follow, coleção LR(0), tabela SLR e a pilha passo a passo) e **Compilar** (os dois juntos sobre um programa, com a pilha andando sobre o código). Todos os exemplos do repositório, inclusive a Manezês, carregam pelo seletor no topo.
 
 ## O que foi implementado
 
@@ -41,8 +46,6 @@ python3 -m unittest discover testes     # 45 testes automáticos
 **Léxico.** Cada definição regular vira um AFD, que é minimizado; os AFDs mínimos são unidos por `&` e o AFND resultante é determinizado, gerando a tabela de análise léxica. Todos esses autômatos aparecem em forma de tabela (na tela, em `.txt`/`.csv` e como grafo `.dot`). Na execução, o texto fonte vira a lista `<lexema, padrão>` ou `<lexema, erro!>`, usando o casamento mais longo; se um lexema casa com dois padrões, vence o definido primeiro.
 
 **Sintático.** A partir da gramática são calculados First/Follow, a coleção canônica LR(0) e a tabela SLR; conflitos são listados com estado e símbolo. As palavras reservadas entram na tabela de símbolos antes da análise: identificadores e constantes viram `<id, linha da TS>` e palavras reservadas viram `<for, PR>`. A execução lê a lista de tokens do léxico e mostra a pilha passo a passo, dizendo se o código está correto ou onde está o erro.
-
-<p align="center"><img src="docs/img/terminal_manezes.svg" alt="compilando os programas da Manezês" width="100%"></p>
 
 ## Uso
 
@@ -124,12 +127,13 @@ Para rodar em outros geradores, os arquivos usam só a notação básica do enun
 
 `exemplos/` tem 8 definições léxicas (os dois exemplos do enunciado, definições auxiliares, operadores, cadeias, erros, prioridade) e 6 gramáticas (incluindo as do livro: a de expressões, cuja tabela bate com a fig. 4.37, e uma que não é SLR(1)). Sobre o exemplo 2 do enunciado: `a?(a|b)+` e `b?(a|b)+` denotam a mesma linguagem, então todo lexema casa com as duas e `er1` sempre vence; `definicoes_intencao.er`, na mesma pasta, dá a saída do PDF.
 
-Os testes comparam os autômatos com o módulo `re` do Python em todas as palavras curtas de 400 ERs aleatórias, e o analisador SLR com um reconhecedor Earley, além dos exemplos do livro.
+Os testes comparam os autômatos com o módulo `re` do Python em todas as palavras curtas de 400 ERs aleatórias, e o analisador SLR com um reconhecedor Earley, além dos exemplos do livro e da API da interface.
 
 ## Estrutura
 
 ```
 main.py          linha de comando e menu interativo
+web/             interface gráfica (servidor local com a biblioteca padrão + HTML/CSS/JS)
 lexico/          Trabalho I: ER, conversão, minimização, união, determinização, analisador
 sintatico/       Trabalho II: gramática, First/Follow, LR(0), tabela SLR, analisador LR
 comum/           tabela de símbolos, formato de tokens, tabelas em texto

@@ -3,6 +3,7 @@
 
 Uso rápido (veja o README.md para tudo):
     python3 main.py                                  # menu interativo
+    python3 main.py web                              # interface gráfica no navegador
     python3 main.py lexico projetar  DEF.er   [-o PASTA]
     python3 main.py lexico executar  PASTA/analisador_lexico.json FONTE [-o tokens.txt]
     python3 main.py sintatico projetar GRAM.glc [--pr PR.txt] [-o PASTA]
@@ -246,6 +247,7 @@ def menu() -> None:
         "3": "Projetar analisador sintático (GLC + palavras reservadas -> tabela SLR)",
         "4": "Executar analisador sintático (lista de tokens -> pilha de execução)",
         "5": "Compilar: léxico + sintático integrados sobre um fonte",
+        "6": "Abrir a interface gráfica no navegador",
         "0": "Sair",
     }
     while True:
@@ -256,6 +258,10 @@ def menu() -> None:
             op = input("\nOpção: ").strip()
             if op == "0":
                 return
+            if op == "6":
+                from web.servidor import iniciar
+                iniciar()
+                continue
             if op == "1":
                 d = _arquivo_ou_digitar("as definições regulares (nome: ER)", "saida/definicoes.er")
                 cmd_lexico_projetar(d, _perguntar("Pasta de saída", f"saida/lexico_{nome_base(d)}"))
@@ -339,6 +345,10 @@ def main(argv=None) -> int:
     p.add_argument("-o", "--saida", help="arquivo da pilha (padrão: saida/<tokens>.pilha.txt)")
     p.add_argument("-q", "--silencioso", action="store_true")
 
+    p = sub.add_parser("web", help="abre a interface gráfica no navegador")
+    p.add_argument("--porta", type=int, default=8765)
+    p.add_argument("--sem-navegador", action="store_true", help="não abre o navegador sozinho")
+
     p = sub.add_parser("compilar", help="léxico + tabela de símbolos + sintático sobre um fonte")
     p.add_argument("fonte")
     p.add_argument("--lexico", required=True, help="definições regulares (.er)")
@@ -351,6 +361,10 @@ def main(argv=None) -> int:
     a = ap.parse_args(argv)
     if a.parte is None:
         menu()
+        return 0
+    if a.parte == "web":
+        from web.servidor import iniciar
+        iniciar(a.porta, not a.sem_navegador)
         return 0
     try:
         if a.parte == "lexico" and a.acao == "projetar":

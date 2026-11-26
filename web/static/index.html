@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gerador de Analisadores - LFC UFSC</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='9' cy='16' r='6' fill='none' stroke='%231D5FAF' stroke-width='2.5'/%3E%3Ccircle cx='24' cy='16' r='6' fill='%23DCE9F8' stroke='%2313233A' stroke-width='2.5'/%3E%3Cpath d='M15 16h3' stroke='%2313233A' stroke-width='2.5'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+  <header class="topo">
+    <div class="marca">
+      <svg class="marca-glifo" viewBox="0 0 64 32" aria-hidden="true">
+        <line x1="2" y1="16" x2="11" y2="16" class="g-seta"/>
+        <circle cx="19" cy="16" r="8" class="g-estado"/>
+        <path d="M27 16 L37 16" class="g-seta"/>
+        <circle cx="46" cy="16" r="9" class="g-final"/>
+        <circle cx="46" cy="16" r="5.5" class="g-final-in"/>
+      </svg>
+      <div class="marca-texto">
+        <strong>Gerador de Analisadores</strong>
+        <span>Linguagens Formais e Compiladores, UFSC, grupo A</span>
+      </div>
+    </div>
+
+    <nav class="abas" role="tablist" aria-label="Partes do trabalho">
+      <button role="tab" id="tab-lexico" aria-controls="aba-lexico" aria-selected="true" data-aba="lexico">Léxico</button>
+      <button role="tab" id="tab-sintatico" aria-controls="aba-sintatico" aria-selected="false" data-aba="sintatico">Sintático</button>
+      <button role="tab" id="tab-compilar" aria-controls="aba-compilar" aria-selected="false" data-aba="compilar">Compilar</button>
+    </nav>
+
+    <div class="topo-acoes">
+      <label class="seletor-exemplo">
+        <span>Exemplo</span>
+        <select id="exemplo" aria-label="Carregar exemplo"></select>
+      </label>
+      <a class="link-repo" href="https://github.com/robertotxr/lfc-gerador-analisadores" target="_blank" rel="noopener">Código no GitHub</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- ================================================= LÉXICO -->
+    <section class="aba" id="aba-lexico" role="tabpanel" aria-labelledby="tab-lexico">
+      <div class="bancada">
+        <aside class="entrada">
+          <div class="bloco">
+            <div class="bloco-cab">
+              <h2>Definições regulares</h2>
+              <span class="dica">nome: ER, uma por linha</span>
+            </div>
+            <div class="editor" id="ed-lex-def"></div>
+            <p class="erro" id="erro-lex-def" hidden></p>
+            <div class="botoes">
+              <button class="primario" id="lex-gerar">Gerar analisador</button>
+              <label class="opcao"><input type="checkbox" id="lex-min"> Minimizar também a tabela final</label>
+            </div>
+          </div>
+          <div class="bloco">
+            <div class="bloco-cab">
+              <h2>Texto fonte</h2>
+              <div class="seg" role="radiogroup" aria-label="Modo de análise" id="lex-modo">
+                <button role="radio" aria-checked="true" data-modo="fonte" title="Casamento mais longo: tokens podem estar colados">Fonte</button>
+                <button role="radio" aria-checked="false" data-modo="palavras" title="Cada palavra separada por espaço tem que ser um token inteiro">Palavras</button>
+              </div>
+            </div>
+            <div class="editor" id="ed-lex-fonte"></div>
+            <p class="erro" id="erro-lex-fonte" hidden></p>
+            <div class="botoes">
+              <button class="primario" id="lex-analisar">Analisar texto</button>
+            </div>
+          </div>
+        </aside>
+        <div class="saida">
+          <ol class="rota" id="rota-lexico" aria-label="Etapas do gerador léxico"></ol>
+          <div class="folha" id="folha-lexico" tabindex="-1"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================= SINTÁTICO -->
+    <section class="aba" id="aba-sintatico" role="tabpanel" aria-labelledby="tab-sintatico" hidden>
+      <div class="bancada">
+        <aside class="entrada">
+          <div class="bloco">
+            <div class="bloco-cab">
+              <h2>Gramática</h2>
+              <span class="dica">&lt;A&gt; ::= corpo, uma por linha</span>
+            </div>
+            <div class="editor alto" id="ed-sin-gram"></div>
+            <p class="erro" id="erro-sin-gram" hidden></p>
+          </div>
+          <div class="bloco">
+            <div class="bloco-cab">
+              <h2>Palavras reservadas</h2>
+            </div>
+            <div class="editor baixo" id="ed-sin-pr"></div>
+            <div class="botoes">
+              <button class="primario" id="sin-gerar">Gerar tabela SLR</button>
+            </div>
+          </div>
+          <div class="bloco">
+            <div class="bloco-cab">
+              <h2>Tokens de entrada</h2>
+              <span class="dica">&lt;lexema, padrão&gt; ou &lt;id, 10&gt;</span>
+            </div>
+            <div class="editor" id="ed-sin-tokens"></div>
+            <p class="erro" id="erro-sin-tokens" hidden></p>
+            <div class="botoes">
+              <button class="primario" id="sin-analisar">Analisar tokens</button>
+            </div>
+          </div>
+        </aside>
+        <div class="saida">
+          <ol class="rota" id="rota-sintatico" aria-label="Etapas do gerador sintático"></ol>
+          <div class="folha" id="folha-sintatico" tabindex="-1"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================= COMPILAR -->
+    <section class="aba" id="aba-compilar" role="tabpanel" aria-labelledby="tab-compilar" hidden>
+      <div class="bancada">
+        <aside class="entrada">
+          <div class="bloco bloco-arquivos">
+            <div class="arquivos" role="tablist" aria-label="Arquivos da linguagem" id="comp-arquivos">
+              <button role="tab" data-arq="fonte" aria-selected="true">programa</button>
+              <button role="tab" data-arq="lexico" aria-selected="false">lexico.er</button>
+              <button role="tab" data-arq="gramatica" aria-selected="false">sintatico.glc</button>
+              <button role="tab" data-arq="pr" aria-selected="false">reservadas</button>
+            </div>
+            <div class="editor alto" id="ed-comp-fonte"></div>
+            <div class="editor alto" id="ed-comp-lexico" hidden></div>
+            <div class="editor alto" id="ed-comp-gramatica" hidden></div>
+            <div class="editor alto" id="ed-comp-pr" hidden></div>
+            <p class="erro" id="erro-comp" hidden></p>
+            <div class="botoes">
+              <button class="primario" id="comp-compilar">Compilar</button>
+              <span class="dica">Ctrl + Enter</span>
+            </div>
+          </div>
+        </aside>
+        <div class="saida">
+          <ol class="rota" id="rota-compilar" aria-label="Etapas da compilação"></ol>
+          <div class="veredito" id="veredito" hidden></div>
+          <div class="folha" id="folha-compilar" tabindex="-1"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
