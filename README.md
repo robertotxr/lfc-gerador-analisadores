@@ -20,7 +20,7 @@ Precisa só de Python 3.8+, sem nada para instalar.
 ```bash
 git clone https://github.com/robertotxr/lfc-gerador-analisadores.git
 cd lfc-gerador-analisadores
-python3 main.py web                     # interface gráfica no navegador (ou dois cliques em abrir_interface.command / .bat)
+python3 main.py web                     # interface gráfica no navegador
 python3 main.py                         # menu no terminal
 python3 rodar_exemplos.py               # roda todos os exemplos (saídas em saida/exemplos/)
 python3 -m unittest discover testes     # testes automáticos
