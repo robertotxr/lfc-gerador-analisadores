@@ -3,14 +3,14 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/robertotxr/lfc-gerador-analisadores/actions/workflows/testes.yml"><img src="https://github.com/robertotxr/lfc-gerador-analisadores/actions/workflows/testes.yml/badge.svg" alt="testes"></a>
+  <a href="https://github.com/robertotxr/lfc-gerador-analisadores/actions/workflows/testes.yml"><img src="https://github.com/robertotxr/lfc-gerador-analisadores/actions/workflows/testes.yml/badge.svg?branch=main" alt="testes"></a>
   <img src="https://img.shields.io/badge/python-3.8%2B-3776AB?logo=python&logoColor=white" alt="Python 3.8+">
   <img src="https://img.shields.io/badge/depend%C3%AAncias-nenhuma-16a34a" alt="sem dependências">
   <img src="https://img.shields.io/badge/sint%C3%A1tico-SLR%281%29-7c3aed" alt="SLR(1)">
   <img src="https://img.shields.io/badge/linguagem-Manez%C3%AAs-0ea5e9" alt="Manezês">
 </p>
 
-**Linguagens Formais e Compiladores — UFSC — Profa. Jerusa Marchi — 2026/2**
+**Linguagens Formais e Compiladores — UFSC — Profa. Jerusa Marchi — 2026/2**<br>
 Trabalho I (Gerador de Analisadores Léxicos) e Trabalho II (Gerador de Analisadores Sintáticos SLR), integrados, e a linguagem do grupo: **Manezês**.
 
 **Grupo A:** Claudio Gerolimetto · Maria Júlia de Melo Honorato · Murilo Leite Filho · Roberto Becker Teixeira
