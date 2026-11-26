@@ -1,0 +1,5 @@
+raio = 2.5;
+pi = 3.14159;
+area = pi * raio ^ 2;
+mostra area;
+mostra -(area - 1) / 2;

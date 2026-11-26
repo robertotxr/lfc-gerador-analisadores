@@ -1,0 +1,14 @@
+<int, PR>
+<id, 5>
+<,, virgula>
+<id, 6>
+<;, pv>
+<real, PR>
+<id, 7>
+<;, pv>
+<inicio, PR>
+<id, 5>
+<:=, atrib>
+<num, 8>
+<;, pv>
+<fim, PR>

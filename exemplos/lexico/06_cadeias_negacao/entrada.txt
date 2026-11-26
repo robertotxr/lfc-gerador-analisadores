@@ -1,0 +1,4 @@
+msg = "Olá, mundo! (com acento e símbolos: @#$)";
+c = 'a'; nl = '\n';
+cor = 0xFF00aa; // comentário até o fim da linha
+vazio = "";

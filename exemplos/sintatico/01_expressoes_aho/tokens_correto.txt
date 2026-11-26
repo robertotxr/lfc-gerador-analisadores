@@ -1,0 +1,5 @@
+<a, id>
+<*, mult>
+<b, id>
+<+, soma>
+<c, id>

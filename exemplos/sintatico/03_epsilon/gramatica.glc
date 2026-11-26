@@ -1,0 +1,12 @@
+# Declarações de variáveis com listas e produções vazias (&)
+<Programa> ::= <Decls> inicio <Cmds> fim
+<Decls> ::= <Decl> <Decls>
+<Decls> ::= &
+<Decl> ::= <Tipo> id <MaisIds> ";"
+<MaisIds> ::= "," id <MaisIds>
+<MaisIds> ::= &
+<Tipo> ::= int
+<Tipo> ::= real
+<Cmds> ::= <Cmd> <Cmds>
+<Cmds> ::= &
+<Cmd> ::= id ":=" num ";"

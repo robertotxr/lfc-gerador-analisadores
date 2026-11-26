@@ -1,0 +1,8 @@
+id: [a-z]+
+num: [0-9]+
+relop: < | <= | = | <> | > | >=
+atrib: :=
+arit: \+ | - | \* | /
+abre: \(
+fecha: \)
+pv: ;

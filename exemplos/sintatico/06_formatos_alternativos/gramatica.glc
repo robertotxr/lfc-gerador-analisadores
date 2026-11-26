@@ -1,0 +1,8 @@
+// Mesmo formato do enunciado com notações alternativas aceitas:
+// ⟨ ⟩ para não terminais, “ ” para terminais, | para alternativas,
+// linhas de continuação começando com | e ε para a palavra vazia.
+⟨Lista⟩ ::= “[” ⟨Elementos⟩ “]”
+⟨Elementos⟩ ::= ⟨Elemento⟩ ⟨Resto⟩ | ε
+⟨Resto⟩ ::= “,” ⟨Elemento⟩ ⟨Resto⟩
+          | &
+⟨Elemento⟩ ::= num | ⟨Lista⟩

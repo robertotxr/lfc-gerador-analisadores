@@ -1,0 +1,16 @@
+<Prog> ::= <Prog> <Cmd>
+<Prog> ::= <Cmd>
+<Cmd> ::= id "=" <Exp> ";"
+<Cmd> ::= mostra <Exp> ";"
+<Exp> ::= <Exp> "+" <Termo>
+<Exp> ::= <Exp> "-" <Termo>
+<Exp> ::= <Termo>
+<Termo> ::= <Termo> "*" <Pot>
+<Termo> ::= <Termo> "/" <Pot>
+<Termo> ::= <Pot>
+<Pot> ::= <Fator> "^" <Pot>
+<Pot> ::= <Fator>
+<Fator> ::= "(" <Exp> ")"
+<Fator> ::= "-" <Fator>
+<Fator> ::= id
+<Fator> ::= num

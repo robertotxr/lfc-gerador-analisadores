@@ -1,0 +1,7 @@
+# Gramática 4.49 do Aho: não é ambígua, mas não é SLR(1)
+# (conflito empilha/reduz no estado que contém S -> L.=R e R -> L.)
+<S> ::= <L> "=" <R>
+<S> ::= <R>
+<L> ::= "*" <R>
+<L> ::= id
+<R> ::= <L>

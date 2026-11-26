@@ -1,0 +1,4 @@
+x:=a+1;
+se(x<>y)
+a<=b>=c<d>e=f
+(total*2)/k-1;

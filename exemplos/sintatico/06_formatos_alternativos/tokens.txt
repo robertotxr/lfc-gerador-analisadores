@@ -1,0 +1,10 @@
+<[, abre>
+<num, 1>
+<,, virg>
+<[, abre>
+<], fecha>
+<,, virg>
+<[, abre>
+<num, 2>
+<], fecha>
+<], fecha>

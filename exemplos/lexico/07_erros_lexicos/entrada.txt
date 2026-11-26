@@ -1,0 +1,3 @@
+valor 12 @ 7.5E
+abc$def 3.
+#### ok_1

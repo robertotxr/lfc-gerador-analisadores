@@ -1,0 +1,7 @@
+# "Else pendente": gramática ambígua -> conflito empilha/reduz em 'else'.
+# A tabela é gerada mesmo assim, resolvendo por empilhar (o else fica
+# com o if mais próximo, como em C/Java).
+<S> ::= if <E> then <S>
+<S> ::= if <E> then <S> else <S>
+<S> ::= outro
+<E> ::= cond
