@@ -1,0 +1,25 @@
+name: testes
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  testes:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.9", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Testes automáticos
+        run: python -m unittest discover testes -v
+      - name: Todos os exemplos
+        run: python rodar_exemplos.py
+      - name: Linguagem Manezês
+        run: |
+          python main.py compilar linguagem/correto.mane --lexico linguagem/lexico.er --gramatica linguagem/sintatico.glc --pr linguagem/palavras_reservadas.txt -q
+          ! python main.py compilar linguagem/com_erro.mane --lexico linguagem/lexico.er --gramatica linguagem/sintatico.glc --pr linguagem/palavras_reservadas.txt -q

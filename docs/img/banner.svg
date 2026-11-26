@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="320" viewBox="0 0 1280 320">
+  <defs>
+    <linearGradient id="fundo" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f8fafc"/>
+      <stop offset="1" stop-color="#e0f2fe"/>
+    </linearGradient>
+    <marker id="seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .t { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .m { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
+    </style>
+  </defs>
+
+  <rect width="1280" height="320" rx="20" fill="url(#fundo)"/>
+  <rect x="0.5" y="0.5" width="1279" height="319" rx="20" fill="none" stroke="#cbd5e1"/>
+
+  <text class="t" x="64" y="84" font-size="17" font-weight="700" fill="#0369a1" letter-spacing="2.5">LFC · UFSC · 2026/2 · GRUPO A</text>
+  <text class="t" x="64" y="142" font-size="46" font-weight="800" fill="#0f172a">Gerador de Analisadores</text>
+  <text class="t" x="64" y="196" font-size="46" font-weight="800" fill="#0f172a">Léxicos e Sintáticos <tspan fill="#2563eb">SLR</tspan></text>
+  <text class="t" x="64" y="244" font-size="19" fill="#475569">ER → AFD · minimização · união por &amp; · determinização · LR(0) · SLR(1)</text>
+  <text class="t" x="64" y="278" font-size="18" fill="#64748b">e a linguagem <tspan font-weight="700" fill="#0f172a">Manezês</tspan>, com o sotaque da Ilha</text>
+
+  <!-- AFD de id/num, o exemplo 1 do enunciado -->
+  <g stroke="#475569" stroke-width="2" fill="none">
+    <line x1="842" y1="165" x2="884" y2="165" marker-end="url(#seta)"/>
+    <path d="M938,150 C975,120 1000,108 1036,104" marker-end="url(#seta)"/>
+    <path d="M938,180 C975,210 1000,222 1036,226" marker-end="url(#seta)"/>
+    <path d="M1052,78 C1040,40 1100,40 1088,78" marker-end="url(#seta)"/>
+    <path d="M1052,252 C1040,290 1100,290 1088,252" marker-end="url(#seta)"/>
+  </g>
+  <circle cx="842" cy="165" r="5" fill="#0f172a"/>
+  <circle cx="912" cy="165" r="27" fill="#ffffff" stroke="#334155" stroke-width="2"/>
+  <text class="m" x="912" y="171" font-size="17" text-anchor="middle" fill="#0f172a">q0</text>
+
+  <circle cx="1070" cy="104" r="33" fill="#dbeafe" stroke="#334155" stroke-width="2"/>
+  <circle cx="1070" cy="104" r="27" fill="none" stroke="#334155" stroke-width="2"/>
+  <text class="m" x="1070" y="102" font-size="16" text-anchor="middle" fill="#0f172a">q1</text>
+  <text class="m" x="1070" y="120" font-size="13" text-anchor="middle" fill="#1d4ed8">id</text>
+
+  <circle cx="1070" cy="226" r="33" fill="#dbeafe" stroke="#334155" stroke-width="2"/>
+  <circle cx="1070" cy="226" r="27" fill="none" stroke="#334155" stroke-width="2"/>
+  <text class="m" x="1070" y="224" font-size="16" text-anchor="middle" fill="#0f172a">q2</text>
+  <text class="m" x="1070" y="242" font-size="13" text-anchor="middle" fill="#1d4ed8">num</text>
+
+  <text class="m" x="938" y="104" font-size="14" fill="#334155">[a-zA-Z]</text>
+  <text class="m" x="950" y="246" font-size="14" fill="#334155">[0-9]</text>
+  <text class="m" x="1110" y="44" font-size="14" fill="#334155">[a-zA-Z0-9]</text>
+  <text class="m" x="1110" y="300" font-size="14" fill="#334155">[0-9]</text>
+</svg>

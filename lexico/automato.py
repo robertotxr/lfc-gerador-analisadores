@@ -163,11 +163,15 @@ class AF:
         def esc(s: str) -> str:
             return s.replace("\\", "\\\\").replace('"', '\\"')
 
-        out = [f'digraph "{esc(nome)}" {{', "  rankdir=LR;", '  inicio [shape=point];']
+        out = [f'digraph "{esc(nome)}" {{', "  rankdir=LR;", '  bgcolor="white";',
+               '  node [fontname="Helvetica", fontsize=12, color="#334155", fontcolor="#0f172a"];',
+               '  edge [fontname="Helvetica", fontsize=11, color="#64748b", fontcolor="#334155"];',
+               '  inicio [shape=point, color="#0f172a"];']
         for q in self.estados:
             forma = "doublecircle" if q in self.finais else "circle"
             rot = f"q{q}" + (f"\\n{esc(self.finais[q])}" if q in self.finais else "")
-            out.append(f'  q{q} [shape={forma}, label="{rot}"];')
+            cor = ', style=filled, fillcolor="#dbeafe"' if q in self.finais else ""
+            out.append(f'  q{q} [shape={forma}, label="{rot}"{cor}];')
         if self.inicial is not None:
             out.append(f"  inicio -> q{self.inicial};")
         for q in self.estados:

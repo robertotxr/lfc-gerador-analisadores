@@ -1,4 +1,14 @@
-# Gerador de Analisadores Léxicos e Sintáticos (SLR)
+<p align="center">
+  <img src="docs/img/banner.svg" alt="Gerador de Analisadores Léxicos e Sintáticos SLR - LFC/UFSC - Grupo A" width="100%">
+</p>
+
+<p align="center">
+  <a href="https://github.com/robertotxr/lfc-gerador-analisadores/actions/workflows/testes.yml"><img src="https://github.com/robertotxr/lfc-gerador-analisadores/actions/workflows/testes.yml/badge.svg" alt="testes"></a>
+  <img src="https://img.shields.io/badge/python-3.8%2B-3776AB?logo=python&logoColor=white" alt="Python 3.8+">
+  <img src="https://img.shields.io/badge/depend%C3%AAncias-nenhuma-16a34a" alt="sem dependências">
+  <img src="https://img.shields.io/badge/sint%C3%A1tico-SLR%281%29-7c3aed" alt="SLR(1)">
+  <img src="https://img.shields.io/badge/linguagem-Manez%C3%AAs-0ea5e9" alt="Manezês">
+</p>
 
 **Linguagens Formais e Compiladores — UFSC — Profa. Jerusa Marchi — 2026/2**
 Trabalho I (Gerador de Analisadores Léxicos) e Trabalho II (Gerador de Analisadores Sintáticos SLR), integrados, e a linguagem do grupo: **Manezês**.
@@ -99,6 +109,8 @@ python3 rodar_exemplos.py               # todos os exemplos, saídas em saida/ex
 python3 -m unittest discover testes     # 45 testes automáticos (~30 s)
 ```
 
+<p align="center"><img src="docs/img/terminal_manezes.svg" alt="compilando os três programas da Manezês" width="100%"></p>
+
 O **menu interativo** (`python3 main.py`) faz as mesmas coisas perguntando os arquivos, e deixa **digitar** as definições regulares, a gramática ou o texto fonte na hora (terminando com uma linha `FIM`).
 
 ---
@@ -134,17 +146,15 @@ e depois, para o conjunto:
 5. o **AFD determinizado**, que é a **tabela de análise léxica**, com a composição de cada estado (estados do AFND) e o padrão de cada estado final;
 6. os estados finais disputados por mais de um padrão e outros avisos.
 
-Tabela léxica gerada para o exemplo 1 do enunciado (`id` e `num`):
+Projeto e execução do exemplo 1 do enunciado (`id` e `num`):
 
-```
-AFD | estados: 4 | finais: 3 | transições: 8   (-> inicial, * final, - indefinido)
-|    | δ  | 0  | [1-9] | [A-Za-z] | Token | Composição |
-|----+----+----+-------+----------+-------+------------|
-| -> | q0 | q1 | q2    | q3       |       | {q0,q1,q3} |
-| *  | q1 | -  | -     | -        | num   | {q4}       |
-| *  | q2 | q2 | q2    | -        | num   | {q5}       |
-| *  | q3 | q3 | q3    | q3       | id    | {q2}       |
-```
+<p align="center"><img src="docs/img/terminal_lexico.svg" alt="tabela de análise léxica e tokens do exemplo 1" width="90%"></p>
+
+Os mesmos autômatos como grafo (gerados pelos arquivos `.dot`):
+
+| União dos AFDs mínimos por `&` (AFND) | Determinizado = tabela de análise léxica |
+|:---:|:---:|
+| <img src="docs/img/afnd_uniao_id_num.svg" alt="AFND da união" width="420"> | <img src="docs/img/afd_id_num.svg" alt="tabela léxica como AFD" width="360"> |
 
 Arquivos gerados em `PASTA/`:
 
@@ -273,18 +283,7 @@ python3 main.py sintatico executar PASTA/analisador_sintatico.json TOKENS.txt [-
 
 Lê a lista de tokens produzida pelo léxico e mostra a **pilha de execução** passo a passo (algoritmo da fig. 4.36), como na fig. 4.38 do Aho:
 
-```
-| Passo | Pilha    | Símbolos  | Entrada        | Ação                        |
-|-------+----------+-----------+----------------+-----------------------------|
-| 1     | 0        |           | id * id + id $ | empilha 5                   |
-| 2     | 0 5      | id        | * id + id $    | reduz (6) <F> ::= id        |
-| 3     | 0 3      | <F>       | * id + id $    | reduz (4) <T> ::= <F>       |
-| 4     | 0 2      | <T>       | * id + id $    | empilha 7                   |
-...
-| 13    | 0 1 6 9  | <E> + <T> | $              | reduz (1) <E> ::= <E> + <T> |
-| 14    | 0 1      | <E>       | $              | aceita                      |
-Entrada aceita: o código está sintaticamente correto.
-```
+<p align="center"><img src="docs/img/terminal_sintatico.svg" alt="pilha de execução para id * id + id" width="90%"></p>
 
 No erro, a pilha para no passo do erro e a mensagem diz o token, onde ele está e quais terminais eram esperados:
 
@@ -479,7 +478,9 @@ Dicas:
 
 **ER → árvore (`lexico/er.py`).** Um analisador de descida recursiva com a precedência usual (união < concatenação < `* + ?`) monta a árvore. `{nome}` é trocado por uma cópia da árvore da definição referenciada (cópia para cada folha ter a sua posição).
 
-**Conversão direta (`lexico/er_afd.py`).** Exatamente o algoritmo do Aho (seção 3.9.5): numera as folhas de `(r)#`, calcula `nullable`, `firstpos` e `lastpos` de baixo para cima, preenche `followpos` (concatenação: `lastpos(c1)` segue para `firstpos(c2)`; `*` e `+`: `lastpos(n)` segue para `firstpos(n)`) e constrói o AFD: o estado inicial é `firstpos(raiz)`, a transição de `S` por `a` é a união de `followpos(p)` para as posições `p ∈ S` cujo símbolo contém `a`, e são finais os estados que contêm a posição de `#`. Para `(a|b)*abb` sai o AFD de 4 estados do exemplo 3.36 do livro.
+**Conversão direta (`lexico/er_afd.py`).** Exatamente o algoritmo do Aho (seção 3.9.5): numera as folhas de `(r)#`, calcula `nullable`, `firstpos` e `lastpos` de baixo para cima, preenche `followpos` (concatenação: `lastpos(c1)` segue para `firstpos(c2)`; `*` e `+`: `lastpos(n)` segue para `firstpos(n)`) e constrói o AFD: o estado inicial é `firstpos(raiz)`, a transição de `S` por `a` é a união de `followpos(p)` para as posições `p ∈ S` cujo símbolo contém `a`, e são finais os estados que contêm a posição de `#`. Para `(a|b)*abb` sai o AFD de 4 estados do exemplo 3.36 do livro:
+
+<p align="center"><img src="docs/img/afd_abb.svg" alt="AFD de (a|b)*abb" width="520"></p>
 
 **Minimização (`lexico/minimizacao.py`).** Remove inalcançáveis (busca a partir do inicial) e mortos (busca no grafo reverso a partir dos finais) e refina a partição inicial {finais por padrão, não finais} até estabilizar: dois estados ficam juntos só se, para todo símbolo, vão para a mesma classe (ou os dois ficam indefinidos). Os AFDs são parciais: transição indefinida (`-`) leva a um estado de erro implícito, que não é desenhado.
 
@@ -618,6 +619,8 @@ sintatico/                Trabalho II
 linguagem/                a linguagem Manezês (léxico, sintaxe, PRs, programas)
 exemplos/                 exemplos de teste (léxicos e sintáticos)
 testes/                   testes automáticos
+docs/img/                 imagens deste README (geradas a partir das saídas do programa)
+.github/workflows/        CI: roda os testes e os exemplos a cada push
 ```
 
 ---
